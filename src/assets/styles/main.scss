@@ -1,0 +1,30 @@
+@import "./fonts.scss";
+@import "./reset.scss";
+
+body {
+  font-family: "Lora", serif !important;
+  min-height: 100vh;
+  background-color: #fda174 !important;
+  color: #100603 !important;
+}
+
+.link {
+  width: max-content;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #7d5039 !important;
+}
+
+.icon {
+  font-size: 18px;
+  background: transparent;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.icon:hover {
+  background: rgb(16, 6, 3, 0.2);
+}
