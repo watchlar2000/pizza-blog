@@ -1,10 +1,14 @@
 <template>
   <div>
     <app-header class="header" />
-
-    <a-row class="main">
-      <!-- <a-col :span="12" :offset="6"> <slot /></a-col> -->
-      <a-col class="content"> <slot /></a-col>
+    <a-row type="flex" justify="center" class="main">
+      <a-col
+        :xs="{ span: 22 }"
+        :lg="{ span: 18 }"
+        :xl="{ span: 14 }"
+        :xxl="{ span: 10 }"
+        ><slot
+      /></a-col>
     </a-row>
   </div>
 </template>
@@ -22,10 +26,6 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  padding: 0 20px;
-}
-
-.content {
   margin-top: 25px;
 }
 </style>

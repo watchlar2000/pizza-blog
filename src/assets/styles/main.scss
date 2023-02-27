@@ -4,6 +4,7 @@
 body {
   font-family: "Lora", serif !important;
   min-height: 100vh;
+  line-height: 180% !important;
   background-color: #fda174 !important;
   color: #100603 !important;
 }
@@ -27,4 +28,8 @@ body {
 
 .icon:hover {
   background: rgb(16, 6, 3, 0.2);
+}
+
+.pointer {
+  cursor: pointer;
 }

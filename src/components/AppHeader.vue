@@ -5,14 +5,21 @@
     </h1>
     <div class="nav-wrap" v-show="!mobile">
       <span class="link" @click="login" v-if="!isLoggedIn">Login</span>
-      <a-dropdown v-else>
+      <a-dropdown v-else placement="bottomRight">
         <a-menu slot="overlay">
-          <a-menu-item key="1"> Profile </a-menu-item>
+          <a-menu-item key="1">
+            <router-link :to="{ name: 'profile', params: { id } }"
+              >Profile</router-link
+            >
+          </a-menu-item>
           <a-menu-item key="2">
             <span @click="logout">Logout</span>
           </a-menu-item>
         </a-menu>
-        <span class="profile">{{ profileName }}</span>
+        <span class="profile" v-if="user.photoURL !== ''">
+          <img :src="user.photoURL" :alt="user.name" />
+        </span>
+        <span class="profile" v-else>{{ profileName }}</span>
       </a-dropdown>
     </div>
     <a-icon
@@ -38,9 +45,27 @@
               @click="toggleMobileMenu"
             />
           </div>
+
+          <div class="mobile-profile" v-show="isLoggedIn">
+            <h2>{{ user.name }}</h2>
+            <div class="profile-photo">
+              <span class="profile" v-if="user.photoURL !== ''">
+                <img :src="user.photoURL" :alt="user.name" />
+              </span>
+              <span class="profile" v-else>{{ this.user.name[0] }}</span>
+            </div>
+          </div>
+
           <nav class="mobile-nav-links">
-            <router-link to="/" class="link">Home</router-link>
-            <router-link to="/login" class="link">Login</router-link>
+            <span class="link" @click="login" v-if="!isLoggedIn">Login</span>
+            <template v-else>
+              <router-link
+                :to="{ name: 'profile', params: { id } }"
+                class="link"
+                >Profile</router-link
+              >
+              <span @click="logout" class="link">Logout</span>
+            </template>
           </nav>
         </div>
       </div>
@@ -68,11 +93,13 @@ export default {
     window.addEventListener("resize", this.isMobile);
   },
   computed: {
-    ...mapState(useUserStore, ["isLoggedIn", "user"]),
-    profileName() {
-      const profileName = this.user.name[0];
-      return profileName;
-    },
+    ...mapState(useUserStore, ["isLoggedIn", "user", "id"]),
+
+    //     profilePhoto() {
+    // const photo = this.user.photoURL;
+
+    // return photo === '' ?  :
+    //     }
   },
   methods: {
     ...mapActions(useUserStore, ["login", "logout"]),
@@ -91,17 +118,19 @@ export default {
       this.mobileMenu = false;
     },
   },
+  watch: {},
 };
 </script>
 
 <style lang="scss" scoped>
 .header {
+  height: 85px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
   background: transparent;
-  border-bottom: 1.5px solid #2a2a2a;
+  border-bottom: 2px solid #2a2a2a;
 }
 
 .link {
@@ -133,6 +162,10 @@ export default {
   max-width: 350px;
   background-color: #beb8c2;
   z-index: 10;
+
+  .link {
+    color: #424242 !important;
+  }
 }
 
 .mobile-header {
@@ -142,11 +175,21 @@ export default {
   padding: 20px;
 }
 
-.mobile-nav-links {
+.mobile-nav-links,
+.mobile-profile {
   display: flex;
-  flex-direction: column;
+
   gap: 8px;
   padding: 0 20px;
+}
+
+.mobile-nav-links {
+  flex-direction: column;
+}
+
+.mobile-profile {
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-wrap,
@@ -160,6 +203,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   font-size: 18px;
   font-weight: 600;
   color: #fafafa;

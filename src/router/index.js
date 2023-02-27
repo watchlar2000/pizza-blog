@@ -2,8 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 // import ArticleView from "../views/ArticleView.vue";
 import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
-import SignupView from "../views/SignupView.vue";
+import ProfileView from "../views/ProfileView.vue";
 
 Vue.use(VueRouter);
 
@@ -17,19 +16,11 @@ const routes = [
     },
   },
   {
-    path: "/login",
-    name: "login",
-    component: LoginView,
+    path: "/profile/:id",
+    name: "profile",
+    component: ProfileView,
     meta: {
-      title: "Login",
-    },
-  },
-  {
-    path: "/signup",
-    name: "signup",
-    component: SignupView,
-    meta: {
-      title: "Signup",
+      title: "Profile",
     },
   },
 ];
