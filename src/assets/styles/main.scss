@@ -93,3 +93,7 @@ body {
   color: var(--secondary-variant);
   background: transparent;
 }
+
+::selection {
+  background: var(--surface);
+}

@@ -36,9 +36,9 @@ export default {
 }
 
 .content {
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 22px;
 }
 </style>
