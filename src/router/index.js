@@ -1,6 +1,7 @@
 import CreatePost from "@/views/CreatePost.vue";
 import Vue from "vue";
 import VueRouter from "vue-router";
+import AboutView from "../views/AboutView.vue";
 import HomeView from "../views/HomeView.vue";
 import PostView from "../views/PostView.vue";
 import ProfileView from "../views/ProfileView.vue";
@@ -14,6 +15,14 @@ const routes = [
     component: HomeView,
     meta: {
       title: "Home",
+    },
+  },
+  {
+    path: "/",
+    name: "About",
+    component: AboutView,
+    meta: {
+      title: "About",
     },
   },
   {
@@ -50,7 +59,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   window.document.title = `${to.meta.title} | Pizza Blog`;
-  // console.log(to, from);
   next();
 });
 

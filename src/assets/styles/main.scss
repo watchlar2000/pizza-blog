@@ -1,21 +1,18 @@
 @import "./fonts.scss";
 @import "./reset.scss";
+@import "./colors.scss";
 
 body {
   font-family: "Lora", serif !important;
   min-height: 100vh;
   line-height: 180% !important;
-  background-color: #fda174 !important;
-  color: #100603 !important;
+  background-color: var(--background) !important;
+  color: var(--primary) !important;
 }
 
 .link {
   width: max-content;
   cursor: pointer;
-}
-
-.link:hover {
-  color: #7d5039 !important;
 }
 
 .icon {
@@ -27,7 +24,7 @@ body {
 }
 
 .icon:hover {
-  background: rgb(16, 6, 3, 0.2);
+  background: var(--primary-transparent-50);
 }
 
 .pointer {
@@ -35,6 +32,7 @@ body {
 }
 
 .input {
+  font-family: inherit;
   padding: 4px 12px;
   background: #ea8d5e;
   transition: all 0.1s ease-in-out;
@@ -47,8 +45,8 @@ body {
 
 // Quill editor styles
 .editor {
-  border: 2px solid #2a2a2a !important;
-  color: #2a2a2a;
+  border: 2px solid var(--primary) !important;
+  color: var(--primary);
 }
 .ql-container.ql-snow {
   border: 0;
@@ -56,11 +54,39 @@ body {
 }
 .ql-toolbar.ql-snow {
   border: none;
-  border-bottom: 2px solid #2a2a2a;
+  border-bottom: 2px solid var(--primary);
 }
 
 .error {
-  color: rgb(203, 22, 22);
+  color: var(--error);
   font-weight: 500;
   font-size: 14px;
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background: var(--primary);
+  color: var(--secondary-variant);
+  transition: all 0.05s ease-in-out;
+
+  &:hover {
+    color: var(--secondary);
+  }
+}
+
+.ant-dropdown-menu {
+  background: var(--background);
+  border: 2px solid var(--primary);
+  padding: 0;
+}
+
+.ant-dropdown-menu-item {
+  font-size: 16px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.ant-dropdown-menu-item-active:hover {
+  background: var(--background-variant);
 }

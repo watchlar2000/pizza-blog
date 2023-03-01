@@ -42,9 +42,13 @@ export const usePostStore = defineStore("post", {
       this.currentPost = this.posts.find((p) => p.id === id);
     },
     getPostsByAuthor(userId) {
-      // const userData = useUserStore();
-      // const { id: user_id } = userData;
       return this.posts.filter((p) => p.author_id === userId);
+    },
+  },
+
+  getters: {
+    getSortedPostsList() {
+      return this.posts.sort((a, b) => a.created_at - b.created_at);
     },
   },
 });
