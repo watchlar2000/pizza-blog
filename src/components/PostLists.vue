@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="posts.length !== 0">
-      <div v-for="(post, idx) in posts" :key="idx" class="post">
+    <div v-if="getSortedPostsList.length !== 0">
+      <div v-for="(post, idx) in getSortedPostsList" :key="idx" class="post">
         <router-link
           :to="{ name: 'Post', params: { id: post.id } }"
           class="title"
@@ -23,7 +23,7 @@ import { mapState } from "pinia";
 export default {
   name: "PostLists",
   computed: {
-    ...mapState(usePostStore, ["posts"]),
+    ...mapState(usePostStore, ["getSortedPostsList"]),
   },
   methods: {
     formatDate,
@@ -45,6 +45,7 @@ export default {
   font-size: 24px;
 
   &:hover {
+    text-decoration: underline;
     color: #2a2a2ada;
   }
 }
@@ -54,8 +55,9 @@ export default {
 }
 
 .date {
+  font-family: "Poppins";
+  color: var(--surface);
   font-size: 12px;
-  margin-top: 4px !important;
-  font-weight: 600;
+  font-weight: 100;
 }
 </style>

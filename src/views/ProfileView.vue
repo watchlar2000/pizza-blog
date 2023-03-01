@@ -101,12 +101,12 @@ export default {
 }
 
 .profile-data {
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  margin-top: 14px;
+  gap: 16px;
+  margin-top: 24px;
   text-align: center;
 
   .option {
