@@ -33,3 +33,34 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+.input {
+  padding: 4px 12px;
+  background: #ea8d5e;
+  transition: all 0.1s ease-in-out;
+  font-size: 16px;
+}
+
+.input:focus {
+  background: #f59667;
+}
+
+// Quill editor styles
+.editor {
+  border: 2px solid #2a2a2a !important;
+  color: #2a2a2a;
+}
+.ql-container.ql-snow {
+  border: 0;
+  min-height: 100px;
+}
+.ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 2px solid #2a2a2a;
+}
+
+.error {
+  color: rgb(203, 22, 22);
+  font-weight: 500;
+  font-size: 14px;
+}

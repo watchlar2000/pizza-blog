@@ -15,7 +15,15 @@
           </h3>
         </div>
         <div v-else class="prodile-edit">
-          <input v-model="userName" class="input" />
+          <div>
+            <input
+              v-model="userName"
+              @input="validate"
+              class="input"
+              placeholder="Your name"
+            />
+            <p v-if="error" class="error">Please write down your name</p>
+          </div>
           <div class="controls">
             <a-icon @click="save" type="save" class="control pointer" />
             <a-icon @click="cancel" type="close" class="control pointer" />
@@ -27,27 +35,19 @@
         <h3 class="value">{{ user.email }}</h3>
       </div>
       <div class="option">
+        Posts:
+        <h3 class="value">{{ getPostsByAuthor(id).length }}</h3>
+      </div>
+      <div class="option">
         Comments:
         <h3 class="value">0</h3>
       </div>
     </div>
-
-    <!-- <form class="profile-form">
-      <label class="label">
-        Name:
-        <input v-model="user.name" class="input" />
-      </label>
-      <label class="label">
-        Email:
-        <input v-model="user.email" class="input" />
-      </label>
-
-      <button class="button button-save">Save</button>
-    </form> -->
   </div>
 </template>
 
 <script>
+import { usePostStore } from "@/store/post";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
 
@@ -57,10 +57,12 @@ export default {
     return {
       editMode: false,
       userName: "",
+      error: false,
     };
   },
   computed: {
-    ...mapState(useUserStore, ["user"]),
+    ...mapState(useUserStore, ["user", "id"]),
+    ...mapState(usePostStore, ["getPostsByAuthor"]),
   },
   methods: {
     ...mapActions(useUserStore, ["updateUserName"]),
@@ -72,10 +74,18 @@ export default {
       this.editMode = false;
       this.userName = "";
     },
+    validate() {
+      if (this.userName.trim() === "") {
+        this.error = true;
+      } else {
+        this.error = false;
+      }
+    },
     save() {
-      console.log(this.userName);
-      this.updateUserName(this.userName);
-      this.cancel();
+      if (!this.error) {
+        this.updateUserName(this.userName);
+        this.cancel();
+      }
     },
   },
 };
@@ -91,6 +101,7 @@ export default {
 }
 
 .profile-data {
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,8 +123,9 @@ export default {
 
 .prodile-edit,
 .controls {
+  margin-top: 10px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -123,17 +135,6 @@ export default {
 
 .control:hover {
   color: #2a2a2ab6;
-}
-
-.input {
-  padding: 4px 12px;
-  background: #ea8d5e;
-  transition: all 0.1s ease-in-out;
-  font-size: 16px;
-}
-
-.input:focus {
-  background: #f59667;
 }
 
 .button {

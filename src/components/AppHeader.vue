@@ -1,26 +1,37 @@
 <template>
   <header class="header">
     <h1 class="logo">
-      <router-link :to="{ name: 'home' }">Pizza Blog</router-link>
+      <router-link :to="{ name: 'Home' }">Pizza Blog</router-link>
     </h1>
     <div class="nav-wrap" v-show="!mobile">
-      <span class="link" @click="login" v-if="!isLoggedIn">Login</span>
-      <a-dropdown v-else placement="bottomRight">
-        <a-menu slot="overlay">
-          <a-menu-item key="1">
-            <router-link :to="{ name: 'profile', params: { id } }"
-              >Profile</router-link
-            >
-          </a-menu-item>
-          <a-menu-item key="2">
-            <span @click="logout">Logout</span>
-          </a-menu-item>
-        </a-menu>
-        <span class="profile" v-if="user.photoURL !== ''">
-          <img :src="user.photoURL" :alt="user.name" />
-        </span>
-        <span class="profile" v-else>{{ profileName }}</span>
-      </a-dropdown>
+      <div class="nav-links">
+        <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
+        <router-link class="link" :to="{ name: 'CreatePost' }"
+          >Create post</router-link
+        >
+      </div>
+      <div>
+        <span v-if="!isLoggedIn" class="link" @click="login">Login</span>
+        <div v-else class="greeting">
+          <span class="name">{{ user.name }}</span>
+          <a-dropdown placement="bottomRight">
+            <a-menu slot="overlay">
+              <a-menu-item key="1">
+                <router-link v-if="id" :to="{ name: 'Profile', params: { id } }"
+                  >Profile</router-link
+                >
+              </a-menu-item>
+              <a-menu-item key="2">
+                <span @click="logout">Logout</span>
+              </a-menu-item>
+            </a-menu>
+            <span class="profile" v-if="user.photoURL !== ''">
+              <img :src="user.photoURL" :alt="user.name" />
+            </span>
+            <span class="profile" v-else>{{ profileName }}</span>
+          </a-dropdown>
+        </div>
+      </div>
     </div>
     <a-icon
       type="menu"
@@ -37,7 +48,7 @@
         <div class="mobile-nav">
           <div class="mobile-header">
             <h1 class="logo">
-              <router-link :to="{ name: 'home' }">Pizza Blog</router-link>
+              <router-link :to="{ name: 'Home' }">Pizza Blog</router-link>
             </h1>
             <a-icon
               type="close"
@@ -47,25 +58,32 @@
           </div>
 
           <div class="mobile-profile" v-show="isLoggedIn">
-            <h2>{{ user.name }}</h2>
-            <div class="profile-photo">
-              <span class="profile" v-if="user.photoURL !== ''">
-                <img :src="user.photoURL" :alt="user.name" />
-              </span>
-              <span class="profile" v-else>{{ this.user.name[0] }}</span>
+            <div class="profile-header">
+              <h2 class="name">{{ user.name }}</h2>
+              <div class="profile-photo">
+                <span class="profile" v-if="user.photoURL !== ''">
+                  <img :src="user.photoURL" :alt="user.name" />
+                </span>
+                <span class="profile" v-else>{{ this.user.name[0] }}</span>
+              </div>
             </div>
+
+            <router-link
+              v-if="id"
+              :to="{ name: 'Profile', params: { id } }"
+              class="link"
+              >Profile</router-link
+            >
+            |
+            <span @click="logout" class="link">Logout</span>
           </div>
 
           <nav class="mobile-nav-links">
             <span class="link" @click="login" v-if="!isLoggedIn">Login</span>
-            <template v-else>
-              <router-link
-                :to="{ name: 'profile', params: { id } }"
-                class="link"
-                >Profile</router-link
-              >
-              <span @click="logout" class="link">Logout</span>
-            </template>
+            <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
+            <router-link class="link" :to="{ name: 'CreatePost' }"
+              >Create post</router-link
+            >
           </nav>
         </div>
       </div>
@@ -94,12 +112,9 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn", "user", "id"]),
-
-    //     profilePhoto() {
-    // const photo = this.user.photoURL;
-
-    // return photo === '' ?  :
-    //     }
+    profileName() {
+      return "H2";
+    },
   },
   methods: {
     ...mapActions(useUserStore, ["login", "logout"]),
@@ -118,7 +133,11 @@ export default {
       this.mobileMenu = false;
     },
   },
-  watch: {},
+  watch: {
+    $route() {
+      this.mobileMenu = false;
+    },
+  },
 };
 </script>
 
@@ -134,12 +153,31 @@ export default {
 }
 
 .link {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.nav-links {
+  font-weight: 500;
   font-size: 16px;
-  font-weight: 600;
+  color: #424242;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .link {
+    padding: 4px 10px;
+  }
+  .link:hover {
+    color: #2a2a2a !important;
+    background: #9874b188;
+  }
 }
 
 .logo {
-  font-size: 28px;
+  font-family: "Poppins";
+  font-size: 32px;
   font-weight: 600;
 }
 
@@ -154,6 +192,7 @@ export default {
 }
 
 .mobile-nav {
+  padding: 0 20px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -164,7 +203,7 @@ export default {
   z-index: 10;
 
   .link {
-    color: #424242 !important;
+    color: #424242;
   }
 }
 
@@ -172,30 +211,53 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  height: 83px;
 }
 
 .mobile-nav-links,
-.mobile-profile {
+.profile-header {
   display: flex;
-
   gap: 8px;
-  padding: 0 20px;
 }
 
 .mobile-nav-links {
+  margin-top: 18px;
   flex-direction: column;
 }
 
 .mobile-profile {
+  padding: 12px;
+  background: #9874b145;
   align-items: center;
   justify-content: space-between;
+
+  .link {
+    font-size: 13px;
+    font-weight: 400;
+    color: #424242 !important;
+  }
+}
+
+.profile-header {
+  justify-content: space-between;
+  align-items: center;
+
+  .name {
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 
 .nav-wrap,
 .nav-links {
   display: flex;
   gap: 18px;
+}
+
+.nav-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .profile {
@@ -211,5 +273,17 @@ export default {
   height: 45px;
   border-radius: 50%;
   background: #9874b1;
+}
+
+.greeting {
+  /* font-family: "Gravitas"; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+
+  .name {
+    font-weight: 600;
+  }
 }
 </style>

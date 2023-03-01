@@ -1,16 +1,16 @@
 <template>
   <div>
-    <articles-list />
+    <post-lists />
   </div>
 </template>
 
 <script>
-import ArticlesList from "@/components/ArticlesList.vue";
+import PostLists from "@/components/PostLists.vue";
 
 export default {
   name: "HomeView",
   components: {
-    ArticlesList,
+    PostLists,
   },
 };
 </script>

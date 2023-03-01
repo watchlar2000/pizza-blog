@@ -20,15 +20,14 @@ export const useUserStore = defineStore("user", {
     async login() {
       try {
         const res = await signInWithPopup(auth, provider);
-        const { uid: id, displayName } = res.user;
-        this.setUserLocalData(id, displayName);
+        const { uid: id, displayName: name, email, photoURL } = res.user;
+        this.setLocalUserData(id, { name, email, photoURL });
         await setDoc(doc(db, "users", id), this.user);
-        localStorage.setItem("userId", id);
       } catch (e) {
         console.log(e);
       }
     },
-    setUserLocalData(id, user) {
+    setLocalUserData(id, user) {
       const { name, email, photoURL } = user;
       this.isLoggedIn = true;
       this.id = id;
@@ -38,15 +37,10 @@ export const useUserStore = defineStore("user", {
         photoURL,
       };
     },
-    updateUserDatabaseData() {
-      console.log("user data is updated in the database");
-    },
-    async signout() {
+    async logout() {
       try {
         await signOut(auth);
-        // this.isLoggedIn = false;
-        // this.id = null;
-        // this.user = { ...userInitState };
+        this.isLoggedIn = false;
         console.log("Signed-out successful");
       } catch (e) {
         console.log(e);
@@ -74,11 +68,10 @@ export const useUserStore = defineStore("user", {
         }
       });
     },
+
     async updateUserName(updatedName) {
       this.user.name = updatedName;
       const userRef = doc(db, "users", this.id);
-      // console.log(userRef);
-      // console.log(userRef);
       await updateDoc(userRef, {
         name: updatedName,
       });

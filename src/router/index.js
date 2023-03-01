@@ -1,7 +1,8 @@
+import CreatePost from "@/views/CreatePost.vue";
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import ArticleView from "../views/ArticleView.vue";
 import HomeView from "../views/HomeView.vue";
+import PostView from "../views/PostView.vue";
 import ProfileView from "../views/ProfileView.vue";
 
 Vue.use(VueRouter);
@@ -9,18 +10,34 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: HomeView,
     meta: {
       title: "Home",
     },
   },
   {
+    path: "/create-post",
+    name: "CreatePost",
+    component: CreatePost,
+    meta: {
+      title: "Create post",
+    },
+  },
+  {
     path: "/profile/:id",
-    name: "profile",
+    name: "Profile",
     component: ProfileView,
     meta: {
       title: "Profile",
+    },
+  },
+  {
+    path: "/post/:id",
+    name: "Post",
+    component: PostView,
+    meta: {
+      title: "Post",
     },
   },
 ];

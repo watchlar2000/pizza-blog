@@ -9,6 +9,7 @@
 <script>
 import { mapActions } from "pinia";
 import AppLayout from "./layouts/AppLayout.vue";
+import { usePostStore } from "./store/post";
 import { useUserStore } from "./store/user";
 
 export default {
@@ -18,9 +19,11 @@ export default {
   },
   mounted() {
     this.getCurrentUser();
+    this.getPostsList();
   },
   methods: {
     ...mapActions(useUserStore, ["getCurrentUser"]),
+    ...mapActions(usePostStore, ["getPostsList"]),
   },
 };
 </script>
