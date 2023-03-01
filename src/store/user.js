@@ -41,7 +41,6 @@ export const useUserStore = defineStore("user", {
       try {
         await signOut(auth);
         this.isLoggedIn = false;
-        console.log("Signed-out successful");
       } catch (e) {
         console.log(e);
       }

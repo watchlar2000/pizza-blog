@@ -76,14 +76,15 @@ body {
 }
 
 .ant-dropdown-menu {
-  background: var(--background);
-  border: 2px solid var(--primary);
+  background: var(--primary);
+  // border: 2px solid var(--primary);
+  border-radius: 0;
   padding: 0;
 }
 
 .ant-dropdown-menu-item {
   font-size: 16px;
-  color: var(--primary);
+  color: var(--secondary);
   font-weight: 500;
 }
 

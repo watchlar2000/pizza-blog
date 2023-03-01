@@ -68,6 +68,7 @@
     <mobile-nav
       v-show="mobileMenu"
       @toggle-menu="toggleMobileMenu"
+      @click.native="closeMobileMenu"
     ></mobile-nav>
   </header>
 </template>
@@ -103,6 +104,7 @@ export default {
   methods: {
     ...mapActions(useUserStore, ["login", "logout"]),
     toggleMobileMenu() {
+      this.toggleVerticalScroll();
       this.mobileMenu = !this.mobileMenu;
     },
     isMobile() {
@@ -115,6 +117,18 @@ export default {
 
       this.mobile = false;
       this.mobileMenu = false;
+    },
+    closeMobileMenu(e) {
+      if (e.target.localName === "a") {
+        this.mobileMenu = false;
+      }
+    },
+    toggleVerticalScroll() {
+      if (!this.mobileMenu) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "visible";
+      }
     },
   },
   watch: {
