@@ -77,7 +77,6 @@ body {
 
 .ant-dropdown-menu {
   background: var(--primary);
-  // border: 2px solid var(--primary);
   border-radius: 0;
   padding: 0;
 }
@@ -86,8 +85,11 @@ body {
   font-size: 16px;
   color: var(--secondary);
   font-weight: 500;
+  transition: none;
+  padding: 10px 20px;
 }
 
 .ant-dropdown-menu-item-active:hover {
-  background: var(--background-variant);
+  color: var(--secondary-variant);
+  background: transparent;
 }
