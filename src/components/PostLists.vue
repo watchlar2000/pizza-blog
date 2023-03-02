@@ -56,7 +56,7 @@ export default {
 
 .date {
   font-family: "Poppins";
-  color: var(--surface);
+  color: var(--secondary-variant);
   font-size: 12px;
   font-weight: 100;
 }
