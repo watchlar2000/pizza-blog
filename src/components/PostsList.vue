@@ -21,7 +21,7 @@ import { formatDate } from "@/utils/helpers";
 import { mapState } from "pinia";
 
 export default {
-  name: "PostLists",
+  name: "PostsList",
   computed: {
     ...mapState(usePostStore, ["getSortedPostsList"]),
   },
