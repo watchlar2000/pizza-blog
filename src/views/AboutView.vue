@@ -11,10 +11,13 @@
     <p>
       This project is called "Pizza Blog". Even though there is a "pizza" called
       out in the title, it is not going to be about the pizza related stuff
-      only. I like to cook and bake, so I'm going to post some of my favourite
-      recipes in here.
+      only. I like to cook and bake, so I'm going to post the recipes in here
+      which I fill find interesting.
     </p>
-    <p>Stay stuned.</p>
+    <p>
+      If you want to share any food related things, please login with your
+      google acc and go ahead.
+    </p>
     <p>In case you'd like to reach out, here is my contacts:</p>
     <p>
       <a href="https://github.com/watchlar2000" class="link" target="_blank"
