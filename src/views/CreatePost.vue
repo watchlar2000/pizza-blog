@@ -39,7 +39,7 @@
       <button @click="addPost" class="button">Publish post</button>
     </div>
     <div v-else>
-      <h2>You should be logged in to be able to create posts.</h2>
+      <h2 class="text">You should be logged in to be able to create posts.</h2>
       <p class="login">
         <span @click="login" class="login-link">Click here</span> to login.
       </p>
