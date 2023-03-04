@@ -156,6 +156,8 @@ export default {
 }
 
 .nav-links {
+  display: flex;
+  gap: 18px;
   color: var(--primary);
   flex: 1;
   display: flex;
@@ -181,11 +183,6 @@ export default {
   color: var(--primary);
 }
 
-.nav-links {
-  display: flex;
-  gap: 18px;
-}
-
 .nav-wrap {
   flex: 1;
   display: flex;
@@ -208,7 +205,6 @@ export default {
 }
 
 .greeting {
-  /* font-family: "Gravitas"; */
   display: flex;
   align-items: center;
   gap: 10px;

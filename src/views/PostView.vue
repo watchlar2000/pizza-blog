@@ -1,5 +1,6 @@
 <template>
   <div class="post" v-if="currentPost">
+    <span class="button-back" @click="goBack">Go back</span>
     <h2 class="title">{{ currentPost.title }}</h2>
     <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
     <div v-html="currentPost.content" class="content" />
@@ -23,6 +24,9 @@ export default {
   methods: {
     ...mapActions(usePostStore, ["getPost", "getPostsList"]),
     formatDate,
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
@@ -40,5 +44,34 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 22px;
+}
+
+.button-back {
+  color: var(--surface);
+  width: max-content;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--surface);
+    transition: all 0.05s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.title {
+  &:hover::after {
+    opacity: 0;
+  }
 }
 </style>

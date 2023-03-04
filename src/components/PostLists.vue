@@ -38,16 +38,37 @@ export default {
   flex-direction: column;
   gap: 10px;
 }
+
 .title {
+  width: max-content;
   color: #2a2a2a;
   font-family: "Poppins";
   font-weight: 600;
   font-size: 24px;
+  position: relative;
 
-  &:hover {
-    text-decoration: underline;
-    color: #2a2a2ada;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--primary);
+    transition: all 0.05s ease-in-out;
+    opacity: 0;
   }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.button-back {
+  color: var(--surface);
+  width: max-content;
+
+  cursor: pointer;
 }
 
 .subtitle {
@@ -56,7 +77,7 @@ export default {
 
 .date {
   font-family: "Poppins";
-  color: var(--secondary-variant);
+  color: var(--primary);
   font-size: 12px;
   font-weight: 100;
 }
