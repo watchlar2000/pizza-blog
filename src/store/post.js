@@ -20,6 +20,7 @@ export const usePostStore = defineStore("post", {
         author_name,
         created_at: Date.now(),
       };
+      this.posts.push(newPost);
       try {
         await addDoc(collection(db, "posts"), newPost);
         this.posts.push(newPost);

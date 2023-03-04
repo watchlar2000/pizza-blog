@@ -2,7 +2,9 @@
   <div>
     <div v-if="isLoggedIn" class="create-post">
       <div>
-        <p v-if="error" class="error">Please write down the title</p>
+        <p v-if="error && this.title === ''" class="error">
+          Please write down the title
+        </p>
         <input
           type="text"
           v-model="title"
@@ -11,7 +13,9 @@
         />
       </div>
       <div>
-        <p v-if="error" class="error">Please write down a short subtitle</p>
+        <p v-if="error && this.subtitle === ''" class="error">
+          Please write down a short subtitle
+        </p>
         <input
           type="text"
           v-model="subtitle"
@@ -21,7 +25,9 @@
       </div>
 
       <div>
-        <p v-if="error" class="error">Please fill in the content</p>
+        <p v-if="error && this.content === ''" class="error">
+          Please fill in the content
+        </p>
         <quill-editor
           class="editor"
           @change="onEditorChange"
@@ -86,7 +92,8 @@ export default {
       this.content = value.html;
     },
     validate() {
-      if (this.post !== "" && this.title !== "" && this.subTitle !== "") {
+      console.log("checking...");
+      if (this.title !== "" && this.subtitle !== "" && this.content !== "") {
         this.error = false;
       } else {
         this.error = true;
@@ -94,6 +101,7 @@ export default {
     },
     addPost() {
       this.validate();
+      alert("error");
       if (!this.error) {
         const post = {
           title: this.title,
@@ -123,14 +131,15 @@ export default {
 .button {
   margin-top: 12px;
   padding: 8px 16px;
-  font-weight: 600;
-  background: #948d9a2d;
+  font-weight: 400;
+  background: var(--primary-transparent-50);
+  color: var(--secondary-variant);
   width: max-content;
   margin-inline: auto;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.05s ease-in-out;
 
   &:hover {
-    background: #d87848;
+    background: var(--primary);
   }
 }
 

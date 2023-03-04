@@ -40,34 +40,21 @@ export default {
 }
 
 .title {
-  width: max-content;
-  color: #2a2a2a;
   font-family: "Poppins";
   font-weight: 600;
   font-size: 24px;
   position: relative;
+  transition: all 0.05s ease-in-out;
+  color: var(--primary);
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    height: 2px;
-    width: 100%;
-    background: var(--primary);
-    transition: all 0.05s ease-in-out;
-    opacity: 0;
-  }
-
-  &:hover::after {
-    opacity: 1;
+  &:hover {
+    color: var(--surface) !important;
   }
 }
 
 .button-back {
   color: var(--surface);
   width: max-content;
-
   cursor: pointer;
 }
 

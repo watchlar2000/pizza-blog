@@ -33,7 +33,6 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  color: #2a2a2a;
   font-family: "Poppins";
   font-weight: 600;
   font-size: 24px;
@@ -66,12 +65,6 @@ export default {
 
   &:hover::after {
     opacity: 1;
-  }
-}
-
-.title {
-  &:hover::after {
-    opacity: 0;
   }
 }
 </style>

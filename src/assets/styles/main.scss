@@ -21,10 +21,10 @@ body {
   padding: 6px;
   border-radius: 50%;
   transition: all 0.15s ease;
-}
 
-.icon:hover {
-  background: var(--primary-transparent-50);
+  &:hover {
+    background: var(--primary-transparent-50);
+  }
 }
 
 .pointer {
@@ -33,20 +33,26 @@ body {
 
 .input {
   font-family: inherit;
-  padding: 4px 12px;
-  background: #ea8d5e;
+  padding: 4px 16px;
+  background: transparent;
+  color: var(--primary);
   transition: all 0.1s ease-in-out;
   font-size: 16px;
-}
+  border: 2px solid var(--primary);
 
-.input:focus {
-  background: #f59667;
+  &::placeholder {
+    color: var(--primary-transparent-50);
+  }
 }
 
 // Quill editor styles
 .editor {
   border: 2px solid var(--primary) !important;
   color: var(--primary);
+}
+.ql-editor {
+  font-family: "Gravitas";
+  font-size: 18px;
 }
 .ql-container.ql-snow {
   border: 0;
@@ -55,6 +61,12 @@ body {
 .ql-toolbar.ql-snow {
   border: none;
   border-bottom: 2px solid var(--primary);
+}
+.ql-editor.ql-blank::before {
+  font-size: 18px;
+  padding-left: 0;
+  font-style: normal;
+  color: var(--primary-transparent-50);
 }
 
 .error {
