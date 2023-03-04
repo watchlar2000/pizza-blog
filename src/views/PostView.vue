@@ -1,19 +1,26 @@
 <template>
-  <div class="post" v-if="currentPost">
-    <span class="button-back" @click="goBack">Go back</span>
-    <h2 class="title">{{ currentPost.title }}</h2>
-    <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
-    <div v-html="currentPost.content" class="content" />
+  <div>
+    <div class="post" v-if="currentPost">
+      <span class="button-back" @click="goBack">Go back</span>
+      <h2 class="title">{{ currentPost.title }}</h2>
+      <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
+      <div v-html="currentPost.content" class="content" />
+    </div>
+    <comments-list />
   </div>
 </template>
 
 <script>
+import CommentsList from "@/components/CommentsList.vue";
 import { usePostStore } from "@/store/post";
 import { formatDate } from "@/utils/helpers";
 import { mapActions, mapState } from "pinia";
 
 export default {
   name: "PostView",
+  components: {
+    CommentsList,
+  },
   mounted() {
     const postId = this.$route.params.id;
     this.getPost(postId);

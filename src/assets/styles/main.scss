@@ -113,3 +113,18 @@ body {
 .text {
   font-size: 18px;
 }
+
+.button-post {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 16px;
+  font-weight: 400;
+  background: var(--primary-transparent-50);
+  color: var(--secondary-variant);
+  margin-inline: auto;
+  transition: all 0.05s ease-in-out;
+
+  &:hover {
+    background: var(--primary);
+  }
+}

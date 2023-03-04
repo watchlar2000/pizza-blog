@@ -36,7 +36,7 @@
         />
       </div>
 
-      <button @click="addPost" class="button">Publish post</button>
+      <button @click="addPost" class="button-post">Publish post</button>
     </div>
     <div v-else>
       <h2 class="text">You should be logged in to be able to create posts.</h2>
@@ -126,21 +126,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.button {
-  margin-top: 12px;
-  padding: 8px 16px;
-  font-weight: 400;
-  background: var(--primary-transparent-50);
-  color: var(--secondary-variant);
-  width: max-content;
-  margin-inline: auto;
-  transition: all 0.05s ease-in-out;
-
-  &:hover {
-    background: var(--primary);
-  }
 }
 
 .input {
