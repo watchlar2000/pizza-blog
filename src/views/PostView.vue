@@ -6,7 +6,7 @@
       <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
       <div v-html="currentPost.content" class="content" />
     </div>
-    <div>Comments: {{ getCommentsByPost.length }}</div>
+    <div>Comments: {{ getCommentsByPost?.length }}</div>
     <comments-list />
   </div>
 </template>

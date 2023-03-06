@@ -36,7 +36,9 @@
       />
     </div>
 
-    <button @click="addPost" class="button button-post">Publish post</button>
+    <button @click="addPost" class="button button-post" :disabled="!isLoggedIn">
+      Publish post
+    </button>
   </div>
 </template>
 
@@ -87,7 +89,6 @@ export default {
       this.content = value.html;
     },
     validate() {
-      console.log("checking...");
       if (this.title !== "" && this.subtitle !== "" && this.content !== "") {
         this.error = false;
       } else {
@@ -96,7 +97,6 @@ export default {
     },
     addPost() {
       this.validate();
-      alert("error");
       if (!this.error) {
         const post = {
           title: this.title,
