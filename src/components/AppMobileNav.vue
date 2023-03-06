@@ -39,7 +39,7 @@ import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
 
 export default {
-  name: "MobileNav",
+  name: "AppMobileNav",
   computed: {
     ...mapState(useUserStore, ["isLoggedIn", "user", "id"]),
   },
@@ -138,9 +138,11 @@ export default {
 
 .button-logout {
   background: var(--primary-transparent-50);
+  color: var(--secondary-variant);
 
   &:hover {
     background: var(--primary);
+    color: var(--secondary);
   }
 }
 </style>

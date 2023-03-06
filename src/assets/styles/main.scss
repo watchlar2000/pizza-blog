@@ -10,6 +10,21 @@ body {
   color: var(--primary) !important;
 }
 
+.profile {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fafafa;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #bababa;
+}
+
 .link {
   width: max-content;
   cursor: pointer;
@@ -76,14 +91,20 @@ body {
 }
 
 .button {
+  width: 100%;
   padding: 8px 16px;
   font-size: 16px;
-  background: var(--primary);
-  color: var(--secondary-variant);
+  background: var(--background-variant);
+  color: var(--primary);
   transition: all 0.05s ease-in-out;
 
   &:hover {
     color: var(--secondary);
+    background: var(--primary);
+  }
+
+  &:disabled {
+    background: var(--primary-transparent-50);
   }
 }
 
@@ -114,17 +135,32 @@ body {
   font-size: 18px;
 }
 
-.button-post {
-  width: 100%;
-  margin-top: 12px;
-  padding: 8px 16px;
-  font-weight: 400;
-  background: var(--primary-transparent-50);
-  color: var(--secondary-variant);
-  margin-inline: auto;
-  transition: all 0.05s ease-in-out;
+.post {
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-  &:hover {
-    background: var(--primary);
+  .title {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 24px;
+    position: relative;
+    transition: all 0.05s ease-in-out;
+    color: var(--primary);
+
+    &:hover {
+      color: var(--primary-transparent-50) !important;
+    }
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .date {
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 100;
   }
 }

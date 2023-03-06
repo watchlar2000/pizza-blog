@@ -1,53 +1,47 @@
 <template>
-  <div>
-    <div v-if="isLoggedIn" class="create-post">
-      <div>
-        <p v-if="error && this.title === ''" class="error">
-          Please write down the title
-        </p>
-        <input
-          type="text"
-          v-model="title"
-          placeholder="Post title"
-          class="input"
-        />
-      </div>
-      <div>
-        <p v-if="error && this.subtitle === ''" class="error">
-          Please write down a short subtitle
-        </p>
-        <input
-          type="text"
-          v-model="subtitle"
-          placeholder="Post subtitle"
-          class="input"
-        />
-      </div>
-
-      <div>
-        <p v-if="error && this.content === ''" class="error">
-          Please fill in the content
-        </p>
-        <quill-editor
-          class="editor"
-          @change="onEditorChange"
-          :value="content"
-          :options="editorOption"
-        />
-      </div>
-
-      <button @click="addPost" class="button-post">Publish post</button>
-    </div>
-    <div v-else>
-      <h2 class="text">You should be logged in to be able to create posts.</h2>
-      <p class="login">
-        <span @click="login" class="login-link">Click here</span> to login.
+  <div class="create-post">
+    <not-loggedin-msg v-if="!isLoggedIn" msg="create a post" />
+    <div>
+      <p v-if="error && this.title === ''" class="error">
+        Please write down the title
       </p>
+      <input
+        type="text"
+        v-model="title"
+        placeholder="Post title"
+        class="input"
+      />
     </div>
+    <div>
+      <p v-if="error && this.subtitle === ''" class="error">
+        Please write down a short subtitle
+      </p>
+      <input
+        type="text"
+        v-model="subtitle"
+        placeholder="Post subtitle"
+        class="input"
+      />
+    </div>
+
+    <div>
+      <p v-if="error && this.content === ''" class="error">
+        Please fill in the content
+      </p>
+      <quill-editor
+        class="editor"
+        @change="onEditorChange"
+        :value="content"
+        :options="editorOption"
+      />
+    </div>
+
+    <button @click="addPost" class="button button-post">Publish post</button>
   </div>
 </template>
 
 <script>
+import NotLoggedinMsg from "@/components/NotLoggedinMsg.vue";
 import { usePostStore } from "@/store/post";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
@@ -57,6 +51,7 @@ export default {
   name: "CreatePost",
   components: {
     quillEditor,
+    NotLoggedinMsg,
   },
   data() {
     return {
@@ -130,14 +125,5 @@ export default {
 
 .input {
   width: 100%;
-}
-
-.login {
-  font-size: 16px;
-  margin-top: 12px !important;
-}
-.login-link {
-  text-decoration: underline;
-  cursor: pointer;
 }
 </style>

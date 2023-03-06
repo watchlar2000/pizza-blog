@@ -9,6 +9,7 @@
 <script>
 import { mapActions } from "pinia";
 import AppLayout from "./layouts/AppLayout.vue";
+import { useCommentStore } from "./store/comment";
 import { usePostStore } from "./store/post";
 import { useUserStore } from "./store/user";
 
@@ -20,10 +21,12 @@ export default {
   mounted() {
     this.getCurrentUser();
     this.getPostsList();
+    this.getCommentsList();
   },
   methods: {
     ...mapActions(useUserStore, ["getCurrentUser"]),
     ...mapActions(usePostStore, ["getPostsList"]),
+    ...mapActions(useCommentStore, ["getCommentsList"]),
   },
 };
 </script>

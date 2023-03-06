@@ -1,5 +1,5 @@
 <template>
-  <div class="profile" v-if="user.name">
+  <div v-if="user.name">
     <div class="profile-img">
       <img v-if="user.photoURL !== ''" :src="user.photoURL" :alt="user.name" />
       <span v-else>{{ user.name[0] }}</span>
@@ -40,13 +40,14 @@
       </div>
       <div class="option">
         Comments:
-        <h3 class="value">0</h3>
+        <h3 class="value">{{ getCommentsByAuthor(id).length }}</h3>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useCommentStore } from "@/store/comment";
 import { usePostStore } from "@/store/post";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
@@ -66,6 +67,7 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ["updateUserName"]),
+    ...mapActions(useCommentStore, ["getCommentsByAuthor"]),
     edit() {
       this.editMode = true;
       this.userName = this.user.name;

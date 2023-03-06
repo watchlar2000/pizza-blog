@@ -65,16 +65,16 @@
         </a-dropdown>
       </div>
     </div>
-    <mobile-nav
+    <app-mobile-nav
       v-show="mobileMenu"
       @toggle-menu="toggleMobileMenu"
       @click.native="closeMobileMenu"
-    ></mobile-nav>
+    ></app-mobile-nav>
   </header>
 </template>
 
 <script>
-import MobileNav from "@/components/MobileNav.vue";
+import AppMobileNav from "@/components/AppMobileNav.vue";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
 import sizes from "../utils/atndBreakpoints";
@@ -82,7 +82,7 @@ import sizes from "../utils/atndBreakpoints";
 export default {
   name: "AppHeader",
   components: {
-    MobileNav,
+    AppMobileNav,
   },
   data() {
     return {
@@ -187,21 +187,6 @@ export default {
   flex: 1;
   display: flex;
   justify-content: flex-end;
-}
-
-.profile {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  font-size: 18px;
-  font-weight: 600;
-  color: #fafafa;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #bababa;
 }
 
 .greeting {

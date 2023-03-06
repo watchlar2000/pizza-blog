@@ -6,12 +6,14 @@
       <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
       <div v-html="currentPost.content" class="content" />
     </div>
+    <div>Comments: {{ getCommentsByPost.length }}</div>
     <comments-list />
   </div>
 </template>
 
 <script>
 import CommentsList from "@/components/CommentsList.vue";
+import { useCommentStore } from "@/store/comment";
 import { usePostStore } from "@/store/post";
 import { formatDate } from "@/utils/helpers";
 import { mapActions, mapState } from "pinia";
@@ -22,17 +24,21 @@ export default {
     CommentsList,
   },
   mounted() {
-    const postId = this.$route.params.id;
-    this.getPost(postId);
+    this.loadPost();
   },
   computed: {
     ...mapState(usePostStore, ["currentPost"]),
+    ...mapState(useCommentStore, ["getCommentsByPost"]),
   },
   methods: {
     ...mapActions(usePostStore, ["getPost", "getPostsList"]),
     formatDate,
     goBack() {
       this.$router.go(-1);
+    },
+    loadPost() {
+      const postId = this.$route.params.id;
+      this.getPost(postId);
     },
   },
 };
@@ -43,6 +49,10 @@ export default {
   font-family: "Poppins";
   font-weight: 600;
   font-size: 24px;
+
+  &:hover {
+    color: var(--primary) !important;
+  }
 }
 
 .content {
@@ -53,7 +63,7 @@ export default {
 }
 
 .button-back {
-  color: var(--surface);
+  color: var(--primary);
   width: max-content;
   position: relative;
   cursor: pointer;
@@ -65,7 +75,7 @@ export default {
     left: 0;
     height: 2px;
     width: 100%;
-    background: var(--surface);
+    background: var(--primary);
     transition: all 0.05s ease-in-out;
     opacity: 0;
   }
