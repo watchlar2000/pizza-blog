@@ -37,6 +37,7 @@ export const useCommentStore = defineStore("comment", {
       }
     },
     async getCommentsListByPostId(postId) {
+      this.comments = [];
       const commentsRef = collection(db, "comments");
       const q = query(
         commentsRef,
@@ -67,12 +68,6 @@ export const useCommentStore = defineStore("comment", {
           // eslint-disable-next-line prettier/prettier
         }),
       );
-    },
-  },
-
-  getters: {
-    getSortedCommentsList() {
-      return this.comments.sort((a, b) => b.created_at - a.created_at);
     },
   },
 });

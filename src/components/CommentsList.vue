@@ -24,8 +24,8 @@
       </div>
       <not-loggedin-msg v-else msg="leave a comment" />
     </div>
-    <div class="list" v-if="getSortedCommentsList">
-      <div class="comment" v-for="c in getSortedCommentsList" :key="c.id">
+    <div class="list" v-if="comments">
+      <div class="comment" v-for="c in comments" :key="c.id">
         <span class="profile" v-if="c.user.photoURL !== ''">
           <img :src="c.user.photoURL" :alt="c.user.name" />
         </span>
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn"]),
-    ...mapState(useCommentStore, ["getSortedCommentsList"]),
+    ...mapState(useCommentStore, ["comments"]),
   },
   methods: {
     ...mapActions(useCommentStore, ["createComment"]),

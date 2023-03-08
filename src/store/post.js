@@ -52,28 +52,20 @@ export const usePostStore = defineStore("post", {
         }),
       );
     },
-    async getPostById(postId) {
-      const postRef = doc(db, "posts", postId);
-      const postSnap = await getDoc(postRef);
-
-      if (postSnap.exists()) {
-        const postData = postSnap.data();
-        const userSnap = await getDoc(postData.user);
-        const userData = userSnap.data();
-
-        this.currentPost = { ...postData, user: { ...userData } };
-      } else {
-        console.log("No such document!");
-      }
-    },
     getPostsByAuthor(userId) {
       return this.posts.filter((p) => p.author_id === userId);
+    },
+    async getPostById(postId) {
+      if (this.currentPost === null) {
+        await this.getPostsList();
+      }
+      this.currentPost = this.posts.find((p) => p.id === postId);
     },
   },
 
   getters: {
-    getSortedPostsList() {
-      return this.posts.sort((a, b) => b.created_at - a.created_at);
-    },
+    // getSortedPostsList() {
+    //   return this.posts.sort((a, b) => b.created_at - a.created_at);
+    // },
   },
 });
