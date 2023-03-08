@@ -40,7 +40,7 @@
       </div>
       <div class="option">
         Comments:
-        <h3 class="value">{{ getCommentsByAuthor(id).length }}</h3>
+        <h3 class="value">{{ getCommentsListByUserId(id).length }}</h3>
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ["updateUserName"]),
-    ...mapActions(useCommentStore, ["getCommentsByAuthor"]),
+    ...mapActions(useCommentStore, ["getCommentsListByUserId"]),
     edit() {
       this.editMode = true;
       this.userName = this.user.name;

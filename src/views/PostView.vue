@@ -3,10 +3,10 @@
     <div class="post" v-if="currentPost">
       <span class="button-back" @click="goBack">Go back</span>
       <h2 class="title">{{ currentPost.title }}</h2>
-      <p class="date">Published: {{ formatDate(currentPost.created_at) }}</p>
+      <p class="date">Published: {{ formatDate(currentPost.createdAt) }}</p>
       <div v-html="currentPost.content" class="content" />
     </div>
-    <div>Comments: {{ getCommentsByPost?.length }}</div>
+    <div>Comments: {{ comments?.length }}</div>
     <comments-list />
   </div>
 </template>
@@ -24,21 +24,23 @@ export default {
     CommentsList,
   },
   mounted() {
-    this.loadPost();
+    this.loadPostData();
   },
   computed: {
     ...mapState(usePostStore, ["currentPost"]),
-    ...mapState(useCommentStore, ["getCommentsByPost"]),
+    ...mapState(useCommentStore, ["comments"]),
   },
   methods: {
-    ...mapActions(usePostStore, ["getPost", "getPostsList"]),
+    ...mapActions(usePostStore, ["getPostById"]),
+    ...mapActions(useCommentStore, ["getCommentsListByPostId"]),
     formatDate,
     goBack() {
       this.$router.go(-1);
     },
-    loadPost() {
+    loadPostData() {
       const postId = this.$route.params.id;
-      this.getPost(postId);
+      this.getPostById(postId);
+      this.getCommentsListByPostId(postId);
     },
   },
 };

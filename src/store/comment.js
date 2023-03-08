@@ -1,7 +1,15 @@
 import { db } from "@/firebase/firebaseInit";
-import { addDoc, collection, getDocs } from "firebase/firestore/lite";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore/lite";
 import { defineStore } from "pinia";
-import { usePostStore } from "./post";
 import { useUserStore } from "./user";
 
 export const useCommentStore = defineStore("comment", {
@@ -12,49 +20,59 @@ export const useCommentStore = defineStore("comment", {
   actions: {
     async createComment(comment) {
       const userData = useUserStore();
-      const { id: author_id } = userData;
-      const { name: author_name, photoURL: author_photo } = userData.user;
-
+      const { id: userId, user } = userData;
+      const userDocRef = doc(db, "users", userId);
       const newComment = {
         ...comment,
-        author_id,
-        author_name,
-        author_photo,
-        created_at: Date.now(),
+        userId,
+        user: userDocRef,
+        createdAt: Date.now(),
       };
 
       try {
         await addDoc(collection(db, "comments"), newComment);
-        this.comments.push(newComment);
+        this.comments.push({ ...newComment, user });
       } catch (e) {
         console.log(e);
       }
     },
-    async getCommentsList() {
-      const querySnapshot = await getDocs(collection(db, "comments"));
-      const comments = [];
-      querySnapshot.forEach((doc) => {
-        comments.push({ id: doc.id, ...doc.data() });
-      });
-      this.comments = comments;
+    async getCommentsListByPostId(postId) {
+      const commentsRef = collection(db, "comments");
+      const q = query(
+        commentsRef,
+        where("postId", "==", postId),
+        // eslint-disable-next-line prettier/prettier
+        orderBy("createdAt", "asc"),
+      );
+      const querySnapshot = await getDocs(q);
+      this.comments = await Promise.all(
+        querySnapshot.docs.map(async (comment) => {
+          const commentData = { id: comment.id, ...comment.data() };
+
+          const userSnap = await getDoc(commentData.user);
+          const userData = userSnap.data();
+
+          return { ...commentData, user: { ...userData } };
+          // eslint-disable-next-line prettier/prettier
+        }),
+      );
     },
-    getCommentsByAuthor(userId) {
-      return this.comments.filter((c) => c.author_id === userId);
+    async getCommentsListByUserId(userId) {
+      const commentsRef = collection(db, "comments");
+      const q = query(commentsRef, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+      return await Promise.all(
+        querySnapshot.docs.map(async (comment) => {
+          return { id: comment.id, ...comment.data() };
+          // eslint-disable-next-line prettier/prettier
+        }),
+      );
     },
   },
 
   getters: {
-    getCommentsByPost() {
-      const postData = usePostStore().currentPost;
-
-      if (postData === null) {
-        return;
-      }
-
-      const { id: postId } = postData;
-      return this.comments
-        .filter((c) => c.post_id === postId)
-        .sort((a, b) => b.created_at - a.created_at);
+    getSortedCommentsList() {
+      return this.comments.sort((a, b) => b.created_at - a.created_at);
     },
   },
 });

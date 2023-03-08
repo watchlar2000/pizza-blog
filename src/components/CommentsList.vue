@@ -24,17 +24,17 @@
       </div>
       <not-loggedin-msg v-else msg="leave a comment" />
     </div>
-    <div class="list">
-      <div class="comment" v-for="c in getCommentsByPost" :key="c.id">
-        <span class="profile" v-if="c.author_photo !== ''">
-          <img :src="c.author_photo" :alt="c.author_name" />
+    <div class="list" v-if="getSortedCommentsList">
+      <div class="comment" v-for="c in getSortedCommentsList" :key="c.id">
+        <span class="profile" v-if="c.user.photoURL !== ''">
+          <img :src="c.user.photoURL" :alt="c.user.name" />
         </span>
-        <span class="profile" v-else>{{ c.author_name[0] }}</span>
+        <span class="profile" v-else>{{ c.user.name[0] }}</span>
 
         <div class="comment-data">
           <div class="title">
-            <h3 class="user-name">{{ c.author_name }}</h3>
-            <span class="date">{{ formatDate(c.created_at) }}</span>
+            <h3 class="user-name">{{ c.user.name }}</h3>
+            <span class="date">{{ formatDate(c.createdAt) }}</span>
           </div>
           <p class="comment-content" v-html="c.content" />
         </div>
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn"]),
-    ...mapState(useCommentStore, ["getCommentsByPost"]),
+    ...mapState(useCommentStore, ["getSortedCommentsList"]),
   },
   methods: {
     ...mapActions(useCommentStore, ["createComment"]),
@@ -84,7 +84,7 @@ export default {
     add() {
       const postId = this.$route.params.id;
       const comment = {
-        post_id: postId,
+        postId,
         content: this.content,
       };
       this.createComment(comment);

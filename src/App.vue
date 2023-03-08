@@ -19,12 +19,11 @@ export default {
     AppLayout,
   },
   mounted() {
-    this.getCurrentUser();
+    this.getLoggedinUser();
     this.getPostsList();
-    this.getCommentsList();
   },
   methods: {
-    ...mapActions(useUserStore, ["getCurrentUser"]),
+    ...mapActions(useUserStore, ["getLoggedinUser"]),
     ...mapActions(usePostStore, ["getPostsList"]),
     ...mapActions(useCommentStore, ["getCommentsList"]),
   },
