@@ -1,52 +1,59 @@
 <template>
-  <div v-if="user.name">
-    <div class="profile-img">
-      <img v-if="user.photoURL !== ''" :src="user.photoURL" :alt="user.name" />
-      <span v-else>{{ user.name[0] }}</span>
-    </div>
-
-    <div class="profile-data">
-      <div class="option">
-        Name:
-        <div v-if="!editMode">
-          <h3 class="value">
-            {{ user.name }}
-            <a-icon @click="edit" type="edit" class="control pointer" />
-          </h3>
-        </div>
-        <div v-else class="prodile-edit">
-          <div>
-            <input
-              v-model="userName"
-              @input="validate"
-              class="input"
-              placeholder="Your name"
-            />
-            <p v-if="error" class="error">Please write down your name</p>
+  <div>
+    <div v-if="!loading">
+      <div class="profile-img">
+        <img
+          v-if="user.photoURL !== ''"
+          :src="user.photoURL"
+          :alt="user.name"
+        />
+        <span v-else>{{ user.name[0] }}</span>
+      </div>
+      <div class="profile-data">
+        <div class="option">
+          Name:
+          <div v-if="!editMode">
+            <h3 class="value">
+              {{ user.name }}
+              <a-icon @click="edit" type="edit" class="control pointer" />
+            </h3>
           </div>
-          <div class="controls">
-            <a-icon @click="save" type="save" class="control pointer" />
-            <a-icon @click="cancel" type="close" class="control pointer" />
+          <div v-else class="prodile-edit">
+            <div>
+              <input
+                v-model="userName"
+                @input="validate"
+                class="input"
+                placeholder="Your name"
+              />
+              <p v-if="error" class="error">Please write down your name</p>
+            </div>
+            <div class="controls">
+              <a-icon @click="save" type="save" class="control pointer" />
+              <a-icon @click="cancel" type="close" class="control pointer" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="option">
-        Email:
-        <h3 class="value">{{ user.email }}</h3>
-      </div>
-      <div class="option">
-        Posts:
-        <h3 class="value">{{ getPostsByAuthor(id).length }}</h3>
-      </div>
-      <div class="option">
-        Comments:
-        <h3 class="value">{{ getCommentsListByUserId(id).length }}</h3>
+        <div class="option">
+          Email:
+          <h3 class="value">{{ user.email }}</h3>
+        </div>
+        <div class="option">
+          Posts:
+          <h3 class="value">{{ getPostsByAuthor(id).length }}</h3>
+        </div>
+        <div class="option">
+          Comments:
+          <h3 class="value">{{ getCommentsListByUserId(id).length }}</h3>
+        </div>
       </div>
     </div>
+    <loader-item v-show="loading" />
   </div>
 </template>
 
 <script>
+import LoaderItem from "@/components/LoaderItem.vue";
 import { useCommentStore } from "@/store/comment";
 import { usePostStore } from "@/store/post";
 import { useUserStore } from "@/store/user";
@@ -61,8 +68,11 @@ export default {
       error: false,
     };
   },
+  components: {
+    LoaderItem,
+  },
   computed: {
-    ...mapState(useUserStore, ["user", "id"]),
+    ...mapState(useUserStore, ["user", "id", "loading"]),
     ...mapState(usePostStore, ["getPostsByAuthor"]),
   },
   methods: {
