@@ -6,8 +6,11 @@
       <p class="date">Published: {{ formatDate(currentPost.createdAt) }}</p>
       <div v-html="currentPost.content" class="content" />
     </div>
-    <div>Comments: {{ comments?.length }}</div>
-    <comments-list />
+    <div v-if="!loading">
+      <div>Comments: {{ comments?.length }}</div>
+      <comments-list />
+    </div>
+    <h3 v-show="loading">Loading comments...</h3>
   </div>
 </template>
 
@@ -28,7 +31,7 @@ export default {
   },
   computed: {
     ...mapState(usePostStore, ["currentPost"]),
-    ...mapState(useCommentStore, ["comments"]),
+    ...mapState(useCommentStore, ["comments", "loading"]),
   },
   methods: {
     ...mapActions(usePostStore, ["getPostById"]),

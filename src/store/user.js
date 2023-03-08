@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", {
     id: null,
     user: { ...userInitState },
     selectedUser: null,
+    loading: false,
   }),
 
   actions: {
@@ -47,6 +48,7 @@ export const useUserStore = defineStore("user", {
       }
     },
     getLoggedinUser() {
+      this.loading = true;
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
           return;
@@ -65,14 +67,10 @@ export const useUserStore = defineStore("user", {
             email,
             photoURL,
           };
+          this.loading = false;
         }
       });
     },
-    // async getUserById(userId) {
-    //   const userRef = doc(db, "users", userId);
-    //   const userSnap = await getDoc(userRef);
-    //   console.log(userSnap);
-    // },
     async updateUserName(updatedName) {
       this.user.name = updatedName;
       const userRef = doc(db, "users", this.id);

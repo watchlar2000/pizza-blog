@@ -15,6 +15,7 @@ export const usePostStore = defineStore("post", {
   state: () => ({
     posts: [],
     currentPost: null,
+    loading: false,
   }),
 
   actions: {
@@ -37,6 +38,7 @@ export const usePostStore = defineStore("post", {
       }
     },
     async getPostsList() {
+      this.loading = true;
       const postsRef = collection(db, "posts");
       const q = query(postsRef, orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);
@@ -51,21 +53,16 @@ export const usePostStore = defineStore("post", {
           // eslint-disable-next-line prettier/prettier
         }),
       );
+      this.loading = false;
     },
     getPostsByAuthor(userId) {
       return this.posts.filter((p) => p.author_id === userId);
     },
     async getPostById(postId) {
-      if (this.currentPost === null) {
+      if (this.posts.length === 0) {
         await this.getPostsList();
       }
       this.currentPost = this.posts.find((p) => p.id === postId);
     },
-  },
-
-  getters: {
-    // getSortedPostsList() {
-    //   return this.posts.sort((a, b) => b.created_at - a.created_at);
-    // },
   },
 });
