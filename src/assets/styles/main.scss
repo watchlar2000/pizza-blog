@@ -69,43 +69,28 @@ body {
   border: 2px solid var(--primary) !important;
   color: var(--primary);
 }
+
 .ql-editor {
   font-family: "Lora", serif;
   font-size: 16px;
   margin-top: -5px;
 }
+
 .ql-container.ql-snow {
   border: 0;
   min-height: 100px;
 }
+
 .ql-toolbar.ql-snow {
   border: none;
   border-bottom: 2px solid var(--primary);
 }
+
 .ql-editor.ql-blank::before {
   font-size: 16px;
   padding-left: 0;
   font-style: normal;
   color: var(--primary-transparent-50);
-}
-
-.button {
-  width: 100%;
-  padding: 8px 16px;
-  font-size: 16px;
-  background: var(--background-variant);
-  color: var(--primary);
-  transition: all 0.05s ease-in-out;
-
-  &:hover {
-    color: var(--secondary);
-    background: var(--primary);
-  }
-
-  &:disabled {
-    background: var(--primary-transparent-50);
-    cursor: not-allowed;
-  }
 }
 
 .ant-dropdown-menu {

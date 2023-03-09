@@ -19,7 +19,8 @@
             :value="content"
             :options="editorOption"
           />
-          <button class="button button-post" @click="add">Add comment</button>
+          <!-- <button class="button" @click="add"> 123</button> -->
+          <button-item @click.native="add">Add comment</button-item>
         </div>
       </div>
       <not-loggedin-msg v-else msg="leave a comment" />
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import ButtonItem from "@/components/ButtonItem.vue";
 import NotLoggedinMsg from "@/components/NotLoggedinMsg.vue";
 import { useCommentStore } from "@/store/comment";
 import { useUserStore } from "@/store/user";
@@ -54,6 +56,7 @@ export default {
   name: "CommentsList",
   components: {
     NotLoggedinMsg,
+    ButtonItem,
   },
   data() {
     return {
@@ -168,8 +171,7 @@ export default {
     transform: rotate(90deg);
   }
 
-  .popup,
-  .button-post {
+  .popup {
     margin-top: 12px;
   }
 }

@@ -30,19 +30,16 @@
           :options="editorOption"
         />
       </div>
-      <button
-        @click="addPost"
-        class="button button-post"
-        :disabled="!isLoggedIn"
-      >
-        Publish post
-      </button>
     </div>
+    <button-item @click.native="addPost" :disabled="error">
+      Publish post
+    </button-item>
     <loader-item v-show="loading" />
   </div>
 </template>
 
 <script>
+import ButtonItem from "@/components/ButtonItem.vue";
 import InputErrorMsg from "@/components/InputErrorMsg.vue";
 import InputItem from "@/components/InputItem.vue";
 import LoaderItem from "@/components/LoaderItem.vue";
@@ -61,6 +58,7 @@ export default {
     LoaderItem,
     InputErrorMsg,
     InputItem,
+    ButtonItem,
   },
   data() {
     return {
@@ -113,8 +111,8 @@ export default {
         };
         this.createPost(post);
         this.reset();
+        this.$router.push({ name: "Home" });
       }
-      // this.$router.push({ name: "Home" });
     },
     reset() {
       this.title = "";
@@ -135,9 +133,5 @@ export default {
 .loading {
   opacity: 0.5;
   pointer-events: none;
-}
-
-.button-post {
-  margin-top: 18px;
 }
 </style>
