@@ -25,7 +25,6 @@
             :value="content"
             :options="editorOption"
           />
-          <!-- <button class="button" @click="add"> 123</button> -->
           <button-item @click.native="add">Add comment</button-item>
         </div>
       </div>
@@ -42,7 +41,9 @@
 
         <div class="comment-data">
           <div class="title">
-            <h3 class="user-name">{{ c.user.name }}</h3>
+            <router-link :to="{ name: 'Profile', params: { id: c.userId } }">
+              <h3 class="user-name">{{ c.user.name }}</h3></router-link
+            >
             <span class="date">{{ formatDate(c.createdAt) }}</span>
           </div>
           <p class="comment-content" v-html="c.content" />

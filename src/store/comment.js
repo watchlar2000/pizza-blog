@@ -63,6 +63,8 @@ export const useCommentStore = defineStore("comment", {
       ui.loading = false;
     },
     async getCommentsListByUserId(userId) {
+      const ui = useUiStore();
+      ui.loading = true;
       const commentsRef = collection(db, "comments");
       const q = query(commentsRef, where("userId", "==", userId));
       const querySnapshot = await getDocs(q);
@@ -72,6 +74,7 @@ export const useCommentStore = defineStore("comment", {
           // eslint-disable-next-line prettier/prettier
         }),
       );
+      ui.loading = false;
     },
   },
 });
