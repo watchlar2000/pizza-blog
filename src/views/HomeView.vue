@@ -8,7 +8,8 @@
 <script>
 import LoaderItem from "@/components/LoaderItem.vue";
 import PostsList from "@/components/PostsList.vue";
-import { usePostStore } from "@/store/post";
+// import { usePostStore } from "@/store/post";
+import { useUiStore } from "@/store/ui";
 import { mapState } from "pinia";
 
 export default {
@@ -18,7 +19,8 @@ export default {
     LoaderItem,
   },
   computed: {
-    ...mapState(usePostStore, ["loading"]),
+    // ...mapState(usePostStore, ["loading"]),
+    ...mapState(useUiStore, ["loading"]),
   },
 };
 </script>

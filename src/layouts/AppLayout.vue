@@ -17,12 +17,17 @@
 <script>
 import AppFooter from "@/components/AppFooter.vue";
 import AppHeader from "@/components/AppHeader.vue";
+import { usePostStore } from "@/store/post";
+import { mapState } from "pinia";
 
 export default {
   name: "AppLayout",
   components: {
     AppHeader,
     AppFooter,
+  },
+  computed: {
+    ...mapState(usePostStore, ["postAddedMsg"]),
   },
 };
 </script>

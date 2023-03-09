@@ -9,17 +9,19 @@ import {
   query,
 } from "firebase/firestore/lite";
 import { defineStore } from "pinia";
+import { useUiStore } from "./ui";
 import { useUserStore } from "./user";
 
 export const usePostStore = defineStore("post", {
   state: () => ({
     posts: [],
     currentPost: null,
-    loading: false,
   }),
 
   actions: {
     async createPost(post) {
+      const ui = useUiStore();
+      ui.loading = true;
       const userData = useUserStore();
       const { id: userId } = userData;
       const userDocRef = doc(db, "users", userId);
@@ -31,14 +33,16 @@ export const usePostStore = defineStore("post", {
       };
 
       try {
-        await addDoc(collection(db, "posts"), newPost);
-        this.posts.push(newPost);
+        const postRef = await addDoc(collection(db, "posts"), newPost);
+        this.posts.unshift({ id: postRef.id, ...newPost });
+        ui.loading = false;
       } catch (e) {
         console.log(e);
       }
     },
     async getPostsList() {
-      this.loading = true;
+      const ui = useUiStore();
+      ui.loading = true;
       const postsRef = collection(db, "posts");
       const q = query(postsRef, orderBy("createdAt", "desc"));
       const querySnapshot = await getDocs(q);
@@ -53,7 +57,7 @@ export const usePostStore = defineStore("post", {
           // eslint-disable-next-line prettier/prettier
         }),
       );
-      this.loading = false;
+      ui.loading = false;
     },
     getPostsByAuthor(userId) {
       return this.posts.filter((p) => p.author_id === userId);

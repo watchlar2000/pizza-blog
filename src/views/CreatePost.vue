@@ -1,50 +1,54 @@
 <template>
-  <div class="create-post">
-    <not-loggedin-msg v-if="!isLoggedIn" msg="create a post" />
-    <div>
-      <p v-if="error && this.title === ''" class="error">
-        Please write down the title
-      </p>
-      <input
-        type="text"
-        v-model="title"
-        placeholder="Post title"
-        class="input"
-      />
+  <div>
+    <div
+      class="create-post"
+      :class="{
+        loading: loading,
+      }"
+    >
+      <not-loggedin-msg v-if="!isLoggedIn" msg="create a post" />
+      <div>
+        <input-error-msg v-if="error && this.title === ''"
+          >Please write down the title</input-error-msg
+        >
+        <input-item v-model="title" placeholder="Post title" />
+      </div>
+      <div>
+        <input-error-msg v-if="error && this.subtitle === ''"
+          >Please write down a short subtitle</input-error-msg
+        >
+        <input-item v-model="subtitle" placeholder="Post subtitle" />
+      </div>
+      <div>
+        <input-error-msg v-if="error && this.content === ''"
+          >Please fill in the content</input-error-msg
+        >
+        <quill-editor
+          class="editor"
+          @change="onEditorChange"
+          :value="content"
+          :options="editorOption"
+        />
+      </div>
+      <button
+        @click="addPost"
+        class="button button-post"
+        :disabled="!isLoggedIn"
+      >
+        Publish post
+      </button>
     </div>
-    <div>
-      <p v-if="error && this.subtitle === ''" class="error">
-        Please write down a short subtitle
-      </p>
-      <input
-        type="text"
-        v-model="subtitle"
-        placeholder="Post subtitle"
-        class="input"
-      />
-    </div>
-
-    <div>
-      <p v-if="error && this.content === ''" class="error">
-        Please fill in the content
-      </p>
-      <quill-editor
-        class="editor"
-        @change="onEditorChange"
-        :value="content"
-        :options="editorOption"
-      />
-    </div>
-
-    <button @click="addPost" class="button button-post" :disabled="!isLoggedIn">
-      Publish post
-    </button>
+    <loader-item v-show="loading" />
   </div>
 </template>
 
 <script>
+import InputErrorMsg from "@/components/InputErrorMsg.vue";
+import InputItem from "@/components/InputItem.vue";
+import LoaderItem from "@/components/LoaderItem.vue";
 import NotLoggedinMsg from "@/components/NotLoggedinMsg.vue";
 import { usePostStore } from "@/store/post";
+import { useUiStore } from "@/store/ui";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
 import { quillEditor } from "vue-quill-editor";
@@ -54,6 +58,9 @@ export default {
   components: {
     quillEditor,
     NotLoggedinMsg,
+    LoaderItem,
+    InputErrorMsg,
+    InputItem,
   },
   data() {
     return {
@@ -81,6 +88,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn"]),
+    ...mapState(useUiStore, ["loading"]),
   },
   methods: {
     ...mapActions(useUserStore, ["login"]),
@@ -106,6 +114,7 @@ export default {
         this.createPost(post);
         this.reset();
       }
+      // this.$router.push({ name: "Home" });
     },
     reset() {
       this.title = "";
@@ -123,7 +132,8 @@ export default {
   gap: 12px;
 }
 
-.input {
-  width: 100%;
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
 }
 </style>
