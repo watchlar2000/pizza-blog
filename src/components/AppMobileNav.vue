@@ -27,7 +27,9 @@
           <button class="button" @click="login">Login</button>
         </div>
         <div v-if="isLoggedIn" class="not-loggedin">
-          <button class="button button-logout" @click="logout">Logut</button>
+          <button-item @click.native="logout" class="button-logout">
+            Logut</button-item
+          >
         </div>
       </div>
     </div>
@@ -37,9 +39,13 @@
 <script>
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
+import ButtonItem from "./ButtonItem.vue";
 
 export default {
   name: "AppMobileNav",
+  components: {
+    ButtonItem,
+  },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn", "user", "id"]),
   },
