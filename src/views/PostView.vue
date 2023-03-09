@@ -63,6 +63,7 @@ export default {
 }
 
 .content {
+  color: var(--primary);
   font-size: 18px;
   display: flex;
   flex-direction: column;

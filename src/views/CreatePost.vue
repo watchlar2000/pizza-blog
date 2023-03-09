@@ -109,7 +109,7 @@ export default {
         };
         this.createPost(post);
         this.reset();
-        // this.$router.push({ name: "Home" });
+        this.$router.push({ name: "Home" });
       }
     },
     reset() {
