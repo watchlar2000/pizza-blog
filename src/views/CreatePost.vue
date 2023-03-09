@@ -9,19 +9,19 @@
       <not-loggedin-msg v-if="!isLoggedIn" msg="create a post" />
       <div>
         <input-error-msg v-if="error && this.title === ''"
-          >Please write down the title</input-error-msg
+          >Title required</input-error-msg
         >
         <input-item v-model="title" placeholder="Post title" />
       </div>
       <div>
         <input-error-msg v-if="error && this.subtitle === ''"
-          >Please write down a short subtitle</input-error-msg
+          >Subtitle required</input-error-msg
         >
         <input-item v-model="subtitle" placeholder="Post subtitle" />
       </div>
       <div>
         <input-error-msg v-if="error && this.content === ''"
-          >Please fill in the content</input-error-msg
+          >Content required</input-error-msg
         >
         <quill-editor
           class="editor"
@@ -135,5 +135,9 @@ export default {
 .loading {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.button-post {
+  margin-top: 18px;
 }
 </style>
