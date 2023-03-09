@@ -40,7 +40,7 @@
         </router-link>
 
         <div class="comment-data">
-          <div class="title">
+          <div class="header">
             <router-link :to="{ name: 'Profile', params: { id: c.userId } }">
               <h3 class="user-name">{{ c.user.name }}</h3></router-link
             >
@@ -143,7 +143,7 @@ export default {
 }
 
 .comment-data {
-  .title {
+  .header {
     display: flex;
     align-items: baseline;
     gap: 12px;
