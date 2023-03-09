@@ -40,11 +40,11 @@
         </div>
         <div class="option">
           Posts:
-          <h3 class="value">{{ getPostsByAuthor(id).length }}</h3>
+          <h3 class="value">{{ selectedUserPostsList.length }}</h3>
         </div>
         <div class="option">
           Comments:
-          <h3 class="value">{{ getCommentsListByUserId(id).length }}</h3>
+          <h3 class="value">{{ selectedUserCommentsList.length }}</h3>
         </div>
       </div>
     </div>
@@ -56,6 +56,7 @@
 import LoaderItem from "@/components/LoaderItem.vue";
 import { useCommentStore } from "@/store/comment";
 import { usePostStore } from "@/store/post";
+import { useUiStore } from "@/store/ui";
 import { useUserStore } from "@/store/user";
 import { mapActions, mapState } from "pinia";
 
@@ -71,13 +72,25 @@ export default {
   components: {
     LoaderItem,
   },
+  mounted() {
+    this.loadData();
+  },
   computed: {
-    ...mapState(useUserStore, ["user", "id", "loading"]),
-    ...mapState(usePostStore, ["getPostsByAuthor"]),
+    ...mapState(useUserStore, ["user", "id"]),
+    ...mapState(useUiStore, ["loading"]),
+    ...mapState(usePostStore, ["selectedUserPostsList"]),
+    ...mapState(useCommentStore, ["selectedUserCommentsList"]),
   },
   methods: {
     ...mapActions(useUserStore, ["updateUserName"]),
+    ...mapActions(usePostStore, ["getPostsByAuthorId"]),
     ...mapActions(useCommentStore, ["getCommentsListByUserId"]),
+    loadData() {
+      const userId = this.$route.params.id;
+      console.log("loading data...");
+      this.getPostsByAuthorId(userId);
+      this.getCommentsListByUserId(userId);
+    },
     edit() {
       this.editMode = true;
       this.userName = this.user.name;

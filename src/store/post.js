@@ -16,6 +16,7 @@ export const usePostStore = defineStore("post", {
   state: () => ({
     posts: [],
     currentPost: null,
+    selectedUserPostsList: [],
   }),
 
   actions: {
@@ -59,8 +60,14 @@ export const usePostStore = defineStore("post", {
       );
       ui.loading = false;
     },
-    getPostsByAuthor(userId) {
-      return this.posts.filter((p) => p.author_id === userId);
+    async getPostsByAuthorId(id) {
+      if (this.posts.length === 0) {
+        await this.getPostsList();
+      }
+      this.selectedUserPostsList = this.posts.filter(
+        // eslint-disable-next-line prettier/prettier
+        (p) => p.userId === id,
+      );
     },
     async getPostById(postId) {
       if (this.posts.length === 0) {

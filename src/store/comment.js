@@ -16,6 +16,7 @@ import { useUserStore } from "./user";
 export const useCommentStore = defineStore("comment", {
   state: () => ({
     comments: [],
+    selectedUserCommentsList: [],
   }),
 
   actions: {
@@ -65,7 +66,7 @@ export const useCommentStore = defineStore("comment", {
       const commentsRef = collection(db, "comments");
       const q = query(commentsRef, where("userId", "==", userId));
       const querySnapshot = await getDocs(q);
-      return await Promise.all(
+      this.selectedUserCommentsList = await Promise.all(
         querySnapshot.docs.map(async (comment) => {
           return { id: comment.id, ...comment.data() };
           // eslint-disable-next-line prettier/prettier
