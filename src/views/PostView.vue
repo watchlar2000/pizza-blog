@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div class="post" v-if="currentPost">
+    <div class="post" v-if="currentPost && !loading">
       <span class="button-back" @click="goBack">Go back</span>
       <h2 class="title">{{ currentPost.title }}</h2>
       <p class="date">Published: {{ formatDate(currentPost.createdAt) }}</p>
       <div v-html="currentPost.content" class="content" />
-    </div>
-    <div v-if="!loading">
       <div>Comments: {{ comments?.length }}</div>
       <comments-list />
     </div>
-    <h3 v-show="loading">Loading comments...</h3>
+    <loader-item v-show="loading" />
   </div>
 </template>
 
 <script>
 import CommentsList from "@/components/CommentsList.vue";
+import LoaderItem from "@/components/LoaderItem.vue";
 import { useCommentStore } from "@/store/comment";
 import { usePostStore } from "@/store/post";
+import { useUiStore } from "@/store/ui";
 import { formatDate } from "@/utils/helpers";
 import { mapActions, mapState } from "pinia";
 
@@ -25,13 +25,15 @@ export default {
   name: "PostView",
   components: {
     CommentsList,
+    LoaderItem,
   },
   mounted() {
     this.loadPostData();
   },
   computed: {
     ...mapState(usePostStore, ["currentPost"]),
-    ...mapState(useCommentStore, ["comments", "loading"]),
+    ...mapState(useUiStore, ["loading"]),
+    ...mapState(useCommentStore, ["comments"]),
   },
   methods: {
     ...mapActions(usePostStore, ["getPostById"]),

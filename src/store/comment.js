@@ -10,12 +10,12 @@ import {
   where,
 } from "firebase/firestore/lite";
 import { defineStore } from "pinia";
+import { useUiStore } from "./ui";
 import { useUserStore } from "./user";
 
 export const useCommentStore = defineStore("comment", {
   state: () => ({
     comments: [],
-    loading: false,
   }),
 
   actions: {
@@ -38,8 +38,8 @@ export const useCommentStore = defineStore("comment", {
       }
     },
     async getCommentsListByPostId(postId) {
-      // this.comments = [];
-      this.loading = true;
+      const ui = useUiStore();
+      ui.loading = true;
       const commentsRef = collection(db, "comments");
       const q = query(
         commentsRef,
@@ -59,7 +59,7 @@ export const useCommentStore = defineStore("comment", {
           // eslint-disable-next-line prettier/prettier
         }),
       );
-      this.loading = false;
+      ui.loading = false;
     },
     async getCommentsListByUserId(userId) {
       const commentsRef = collection(db, "comments");
