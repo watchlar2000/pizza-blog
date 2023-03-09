@@ -12,7 +12,13 @@
             }"
           />
         </div>
-        <div v-if="isCommentInput" class="popup">
+        <div
+          v-if="isCommentInput"
+          class="popup"
+          :class="{
+            loading: loading,
+          }"
+        >
           <quill-editor
             class="editor"
             @change="onEditorChange"
@@ -48,6 +54,7 @@
 import ButtonItem from "@/components/ButtonItem.vue";
 import NotLoggedinMsg from "@/components/NotLoggedinMsg.vue";
 import { useCommentStore } from "@/store/comment";
+import { useUiStore } from "@/store/ui";
 import { useUserStore } from "@/store/user";
 import { formatDate } from "@/utils/helpers";
 import { mapActions, mapState } from "pinia";
@@ -78,6 +85,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["isLoggedIn"]),
+    ...mapState(useUiStore, ["loading"]),
     ...mapState(useCommentStore, ["comments"]),
   },
   methods: {

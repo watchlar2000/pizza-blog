@@ -31,9 +31,7 @@
         />
       </div>
     </div>
-    <button-item @click.native="addPost" :disabled="error">
-      Publish post
-    </button-item>
+    <button-item @click.native="addPost">Publish post</button-item>
     <loader-item v-show="loading" />
   </div>
 </template>
@@ -111,7 +109,7 @@ export default {
         };
         this.createPost(post);
         this.reset();
-        this.$router.push({ name: "Home" });
+        // this.$router.push({ name: "Home" });
       }
     },
     reset() {
@@ -128,10 +126,5 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.loading {
-  opacity: 0.5;
-  pointer-events: none;
 }
 </style>
