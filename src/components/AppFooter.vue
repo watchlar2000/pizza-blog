@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <a href="https://github.com/watchlar2000/vue2-reddit-clone" target="_black"
+    <a href="https://github.com/watchlar2000/pizza-blog" target="_black"
       >Source code on Github</a
     >
     &#169; <span>{{ fullYear }}</span>
