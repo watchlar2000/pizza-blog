@@ -33,10 +33,12 @@
     </div>
     <div class="list" v-if="comments">
       <div class="comment" v-for="c in comments" :key="c.id">
-        <span class="profile" v-if="c.user.photoURL !== ''">
-          <img :src="c.user.photoURL" :alt="c.user.name" />
-        </span>
-        <span class="profile" v-else>{{ c.user.name[0] }}</span>
+        <router-link :to="{ name: 'Profile', params: { id: c.userId } }">
+          <span class="profile" v-if="c.user.photoURL !== ''">
+            <img :src="c.user.photoURL" :alt="c.user.name" />
+          </span>
+          <span class="profile" v-else>{{ c.user.name[0] }}</span>
+        </router-link>
 
         <div class="comment-data">
           <div class="title">
@@ -90,7 +92,6 @@ export default {
   },
   methods: {
     ...mapActions(useCommentStore, ["createComment"]),
-
     formatDate,
     add() {
       const postId = this.$route.params.id;

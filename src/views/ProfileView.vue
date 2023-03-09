@@ -1,21 +1,26 @@
 <template>
   <div>
-    <div v-if="!loading">
+    <div v-if="!loading && selectedUser !== null">
       <div class="profile-img">
         <img
-          v-if="user.photoURL !== ''"
-          :src="user.photoURL"
-          :alt="user.name"
+          v-if="selectedUser.photoURL !== ''"
+          :src="selectedUser.photoURL"
+          :alt="selectedUser.name"
         />
-        <span v-else>{{ user.name[0] }}</span>
+        <span v-else>{{ selectedUser.name[0] }}</span>
       </div>
       <div class="profile-data">
         <div class="option">
           Name:
           <div v-if="!editMode">
             <h3 class="value">
-              {{ user.name }}
-              <a-icon @click="edit" type="edit" class="control pointer" />
+              {{ selectedUser.name }}
+              <a-icon
+                v-show="isSelectedUserLoggedIn"
+                @click="edit"
+                type="edit"
+                class="control pointer"
+              />
             </h3>
           </div>
           <div v-else class="prodile-edit">
@@ -36,7 +41,7 @@
         </div>
         <div class="option">
           Email:
-          <h3 class="value">{{ user.email }}</h3>
+          <h3 class="value">{{ selectedUser.email }}</h3>
         </div>
         <div class="option">
           Posts:
@@ -76,24 +81,29 @@ export default {
     this.loadData();
   },
   computed: {
-    ...mapState(useUserStore, ["user", "id"]),
+    ...mapState(useUserStore, [
+      "user",
+      "id",
+      "selectedUser",
+      "isSelectedUserLoggedIn",
+    ]),
     ...mapState(useUiStore, ["loading"]),
     ...mapState(usePostStore, ["selectedUserPostsList"]),
     ...mapState(useCommentStore, ["selectedUserCommentsList"]),
   },
   methods: {
-    ...mapActions(useUserStore, ["updateUserName"]),
+    ...mapActions(useUserStore, ["updateUserName", "getUserById"]),
     ...mapActions(usePostStore, ["getPostsByAuthorId"]),
     ...mapActions(useCommentStore, ["getCommentsListByUserId"]),
     loadData() {
       const userId = this.$route.params.id;
-      console.log("loading data...");
+      this.getUserById(userId);
       this.getPostsByAuthorId(userId);
       this.getCommentsListByUserId(userId);
     },
     edit() {
       this.editMode = true;
-      this.userName = this.user.name;
+      this.userName = this.selectedUser.name;
     },
     cancel() {
       this.editMode = false;
@@ -111,6 +121,11 @@ export default {
         this.updateUserName(this.userName);
         this.cancel();
       }
+    },
+  },
+  watch: {
+    $route() {
+      this.loadData();
     },
   },
 };
