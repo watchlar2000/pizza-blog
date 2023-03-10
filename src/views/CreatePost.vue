@@ -31,7 +31,9 @@
         />
       </div>
     </div>
-    <button-item @click.native="addPost">Publish post</button-item>
+    <button-item @click.native="addPost" :disabled="!isLoggedIn"
+      >Publish post</button-item
+    >
     <loader-item v-show="loading" />
   </div>
 </template>
